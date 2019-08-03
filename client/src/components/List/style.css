@@ -1,33 +1,24 @@
-.list-overflow-container {
-  max-height: 545px;
-  border: 1px #DDDDDD solid;
-  border-radius: 4px;
-  overflow-y: scroll;
-  overflow-x: hidden;
+
+
+.list-group-item{
+  margin: 10px;
+  border: 3px solid #4285f4;
+  padding: 5px;
 }
 
-.list-overflow-container ul {
-  margin: 0;
+.item-title{
+  font-size: 24px;
+  font-weight: bold;
+  color: #fbbc05;
 }
 
-.list-overflow-container li {
-  border-radius: 0px;
-  border-left: none;
-  border-right: none;
+.item-author{
+  font-size: 20px;
+  font-weight: bold;
+  color: #4285f4;
 }
 
-.list-overflow-container li * {
-  cursor: pointer;
-}
-
-.list-overflow-container li a {
-  color: #2A878C;
-}
-
-.list-overflow-container li:first-child {
-  border-top: none;
-}
-
-.list-overflow-container li:last-child {
-  border-bottom: none;
+.item-link{
+  font-size: 20px;
+  color: #ea4335;
 }

@@ -142,14 +142,9 @@ class Search extends Component {
         <Row>
         <Col size="md-2"></Col>
           <Col size="md-8">
+            <br />
             <Jumbotron>
-              <h1>Find Books via Google</h1>
-              <img src="headerImg.png" /> <br />
-              <Link to={"/saved/"}>
-                      <strong>
-                        See books you have saved!
-                      </strong>
-            </Link>
+                <img src="headerImg.png" /> <br />
             </Jumbotron>
             <form>
               <Input

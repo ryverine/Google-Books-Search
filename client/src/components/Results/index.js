@@ -7,8 +7,8 @@ export function ResultList({ children }) {
   return (
     <div>
         <h3>Search Results</h3>
-        <div className="result-overflow-container">
-        <div className="result-group">{children}</div>
+        <div>
+        <div>{children}</div>
         </div>
     </div>
   );

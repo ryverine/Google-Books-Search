@@ -5,12 +5,25 @@ import "./style.css";
 
 export function List({ children }) {
   return (
-    <div className="list-overflow-container">
-      <ul className="list-group">{children}</ul>
+    <div>
+      <div>{children}</div>
     </div>
   );
 }
 
-export function ListItem({ children }) {
-  return <li className="list-group-item">{children}</li>;
+export function ListItem(props) {
+  return (
+  <div className="list-group-item">{props.children}
+
+
+<span className="item-title">{props.title}</span><br />
+
+<span className="item-author">{props.author}</span><br />
+
+<a href={props.link}>
+<span className="item-link">{props.link}</span></a>
+                     
+
+
+  </div>);
 }
