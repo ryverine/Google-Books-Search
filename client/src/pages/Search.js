@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import DeleteBtn from "../components/DeleteBtn";
 import SaveBtn from "../components/SaveBtn";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
-import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 
 import { Input, FormBtn } from "../components/Form";
@@ -41,27 +39,40 @@ class Search extends Component {
 
   saveBook = (book) => {
 
-    console.log(
-      "---- SAVING TO LIST -------------" + "\n" +
-      book.title  + "\n" +
-      book.author  + "\n" +
-      book.description  + "\n" +
-      book.link  + "\n" +
-      book.image  + "\n" +
-      "---------------------------------");
+
 
     API.saveBook(book)
       .then(res => {
-        // a way to change "SAVE BOOK" to "IN LIST"?
+        // removed the saved book from the results list.
+
+        // var myFish = ['angel', 'clown', 'drum', 'mandarin', 'sturgeon'];
+        // var removed = myFish.splice(3, 1);
+        // removed is ["mandarin"]
+        // myFish is ["angel", "clown", "drum", "sturgeon"]
+
+        // find index of book
+        var bookIndex = -1;
+        for (var i = 0; i < this.state.results.length; i++)
+        {
+            if(this.state.results[i].link === book.link)
+            {
+                bookIndex = i;
+                break;
+            }
+        }
+
+        if(bookIndex > -1)
+        {
+            var tmpResults = this.state.results;
+            var removedBook = tmpResults.splice(bookIndex,1);
+            this.setState({results: tmpResults});
+        }
+
       })
       .catch(err => console.log(err));
   };
 
-  deleteBook = id => {
-    API.deleteBook(id)
-      .then(res => this.loadBooks())
-      .catch(err => console.log(err));
-  };
+
 
   doGoogleBooksSearch = event =>
   {
@@ -144,7 +155,7 @@ class Search extends Component {
           <Col size="md-8">
             <br />
             <Jumbotron>
-                <img src="headerImg.png" /> <br />
+                <img src="headerImg.png" alt=""/> <br />
             </Jumbotron>
             <form>
               <Input

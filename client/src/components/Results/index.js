@@ -18,7 +18,7 @@ export function ResultItem(props) {
   return (
     <div className="result-group-item">
       {props.children}
-      <img src={props.image} /> <br />
+      <img src={props.image} alt=""/> <br />
       <span className="result-label">Title:</span> {props.title} <br />
       <span className="result-label">Author:</span> {props.author} <br />
       {props.description} <br />
