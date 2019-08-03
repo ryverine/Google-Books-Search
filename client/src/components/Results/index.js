@@ -17,6 +17,7 @@ export function ResultList({ children }) {
 export function ResultItem(props) {
   return (<li className="result-group-item">
       <div>
+      {props.children}
         <img src={props.image} />
         Title: {props.title} <br />
         Author: {props.author} <br />

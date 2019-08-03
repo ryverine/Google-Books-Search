@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import DeleteBtn from "../components/DeleteBtn";
+import SaveBtn from "../components/SaveBtn";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
 import { Link } from "react-router-dom";
@@ -45,6 +46,8 @@ class Books extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
+    console.log("handleFormSubmit()");
+    /*
     if (this.state.title && this.state.author) {
       API.saveBook({
         title: this.state.title,
@@ -54,10 +57,30 @@ class Books extends Component {
         .then(res => this.loadBooks())
         .catch(err => console.log(err));
     }
+    */
+
   };
 
-  doGoogleBooksSearch = () =>
+  saveBook = (book) => {
+
+    console.log(
+      "---- SAVING TO LIST -------------" + "\n" +
+      book.title  + "\n" +
+      book.author  + "\n" +
+      book.title  + "\n" +
+      book.description  + "\n" +
+      book.link  + "\n" +
+      book.image  + "\n" +
+      "---------------------------------");
+
+    /*API.deleteBook(id)
+      .then(res => this.loadBooks())
+      .catch(err => console.log(err));*/
+  };
+
+  doGoogleBooksSearch = event =>
   {
+    event.preventDefault();
     var searchText = this.state.title.trim();
     API.googleBooksSearch(searchText).then(res => 
       {
@@ -71,12 +94,35 @@ class Books extends Component {
         {
           for(var i = 0; i < resDataItems.length; i++)
           {
+            var tmpAuthor = "";
+            var tmpImage = "";
+           
+            if (resDataItems[i].volumeInfo.authors)
+            {
+              tmpAuthor = resDataItems[i].volumeInfo.authors[0];
+            }
+            else
+            {
+              tmpAuthor = "UNKNOWN";
+            }
+
+
+            if (resDataItems[i].volumeInfo.imageLinks)
+            {
+              tmpImage = resDataItems[i].volumeInfo.imageLinks.thumbnail;
+            }
+            else
+            {
+              tmpImage = "no_thumbnail.png";
+              //tmpImage = "no_thumbnail.png";
+            }
+
             var tmpBook = {
-              author: resDataItems[i].volumeInfo.authors[0],
+              author: tmpAuthor,
               title: resDataItems[i].volumeInfo.title,
               description: resDataItems[i].volumeInfo.description,
               link: resDataItems[i].volumeInfo.infoLink,
-              image: resDataItems[i].volumeInfo.imageLinks.thumbnail
+              image: tmpImage
             };
 
             searchResults.push(tmpBook);
@@ -114,8 +160,7 @@ class Books extends Component {
         <Row>
           <Col size="md-6">
             <Jumbotron>
-              <h1>What Books Should I Read?</h1>
-              <SearchBtn onClick={this.doGoogleBooksSearch}/>
+              <h1>Find Books via Google</h1>
             </Jumbotron>
             <form>
               <Input
@@ -124,6 +169,7 @@ class Books extends Component {
                 name="title"
                 placeholder="Title (required)"
               />
+              {/* 
               <Input
                 value={this.state.author}
                 onChange={this.handleInputChange}
@@ -136,14 +182,15 @@ class Books extends Component {
                 name="synopsis"
                 placeholder="Synopsis (Optional)"
               />
+              */}
               <FormBtn
-                disabled={!(this.state.author && this.state.title)}
-                onClick={this.handleFormSubmit}
+                disabled={!(this.state.title)}
+                onClick={this.doGoogleBooksSearch}
               >
-                Submit Book
+                Search Google Books
               </FormBtn>
             </form>
-            <div>
+            <div>{/*
               <ResultList>
                 {this.state.results.map(result => (
                   <ResultItem key={result.link} 
@@ -155,9 +202,27 @@ class Books extends Component {
                   />
                 ))}
               </ResultList>
+                */}
             </div>
           </Col>
           <Col size="md-6 sm-12">
+          <ResultList>
+                {this.state.results.map(result => (
+                  <ResultItem key={result.link} 
+                    title={result.title}
+                    author={result.author}
+                    description={result.description}
+                    link={result.link}
+                    image={result.image}
+                  >
+                      <SaveBtn onClick={() => this.saveBook(result)} />
+                  </ResultItem>
+                ))}
+          </ResultList>
+
+
+
+            {/*
             <Jumbotron>
               <h1>Books On My List</h1>
             </Jumbotron>
@@ -177,6 +242,7 @@ class Books extends Component {
             ) : (
               <h3>No Results to Display</h3>
             )}
+            */}
           </Col>
         </Row>
       </Container>
