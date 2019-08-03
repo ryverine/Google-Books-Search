@@ -8,21 +8,20 @@ export function ResultList({ children }) {
     <div>
         <h3>Search Results</h3>
         <div className="result-overflow-container">
-        <ul className="result-group">{children}</ul>
+        <div className="result-group">{children}</div>
         </div>
     </div>
   );
 }
 
 export function ResultItem(props) {
-  return (<li className="result-group-item">
-      <div>
+  return (
+    <div className="result-group-item">
       {props.children}
-        <img src={props.image} />
-        Title: {props.title} <br />
-        Author: {props.author} <br />
-        {props.description} <br />
-        <a href={props.link}>{props.link}</a>
-      </div>
-  </li>);
+      <img src={props.image} /> <br />
+      <span className="result-label">Title:</span> {props.title} <br />
+      <span className="result-label">Author:</span> {props.author} <br />
+      {props.description} <br />
+      <a href={props.link}>{props.link}</a>
+    </div>);
 }

@@ -12,7 +12,9 @@ class Saved extends Component {
     books: [],
     title: "",
     author: "",
-    synopsis: ""
+    description: "",
+    link: "",
+    image: ""
   };
 
   componentDidMount() {
@@ -21,8 +23,17 @@ class Saved extends Component {
 
   loadBooks = () => {
     API.getBooks()
-      .then(res =>
-        this.setState({ books: res.data, title: "", author: "", synopsis: "" })
+      .then(res => {
+          console.log("getBooks response:", res);
+            this.setState({ 
+                books: res.data, 
+                title: "", 
+                author: "", 
+                description: "",
+                link: "",
+                image: ""
+            });
+        }
       )
       .catch(err => console.log(err));
   };
@@ -53,14 +64,40 @@ class Saved extends Component {
     }
   };
 
-  render() {
+render() {
     return (
-      <Container fluid>
-        <Row>
-          <Col size="md-6">
-            <Jumbotron>
-              <h1>What Books Should I Read?</h1>
-            </Jumbotron>
+        <Container fluid>
+            <Row>
+                <Col size="md-6">
+                <Jumbotron>
+                    <h1>Books You Have Saved</h1>
+                    <Link to={"/"}>
+                        <strong>
+                            Search for more books!
+                        </strong>
+                    </Link>
+                </Jumbotron>
+                <div>
+                    {this.state.books.length ? (
+                    <List>
+                        {this.state.books.map(book => (
+                        <ListItem key={book._id}>
+                            
+                                <strong>
+                                    Title: {book.title} <br />
+                                    Arthor: {book.author} <br />
+                                    <a href={book.link}>{book.link}</a>
+                                </strong>
+                            
+                            <DeleteBtn onClick={() => this.deleteBook(book._id)} />
+                        </ListItem>
+                        ))}
+                    </List>
+                    ) : (
+                    <h3>No Results to Display</h3>
+                    )}
+                </div>
+            {/* 
             <form>
               <Input
                 value={this.state.title}
@@ -87,6 +124,7 @@ class Saved extends Component {
                 Submit Book
               </FormBtn>
             </form>
+            
           </Col>
           <Col size="md-6 sm-12">
             <Jumbotron>
@@ -108,6 +146,7 @@ class Saved extends Component {
             ) : (
               <h3>No Results to Display</h3>
             )}
+            */}
           </Col>
         </Row>
       </Container>

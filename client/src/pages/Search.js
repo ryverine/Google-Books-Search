@@ -12,24 +12,25 @@ import { ResultList, ResultItem } from "../components/Results";
 
 class Search extends Component {
   state = {
-    books: [],
+    results: [],
     title: "",
     author: "",
-    synopsis: "",
-    results: []
+    description: "",
+    link: "",
+    image: ""
   };
 
-  componentDidMount() {
+  /*componentDidMount() {
     this.loadBooks();
-  }
+  }*/
 
-  loadBooks = () => {
+  /*loadBooks = () => {
     API.getBooks()
       .then(res =>
         this.setState({ books: res.data, title: "", author: "", synopsis: "" })
       )
       .catch(err => console.log(err));
-  };
+  };*/
 
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -139,9 +140,11 @@ class Search extends Component {
     return (
       <Container fluid>
         <Row>
-          <Col size="md-6">
+        <Col size="md-2"></Col>
+          <Col size="md-8">
             <Jumbotron>
               <h1>Find Books via Google</h1>
+              <img src="headerImg.png" /> <br />
               <Link to={"/saved/"}>
                       <strong>
                         See books you have saved!
@@ -162,22 +165,31 @@ class Search extends Component {
                 Search Google Books
               </FormBtn>
             </form>
+            </Col>
+            <Col size="md-2"></Col>
+        </Row>
+        <Row>
+        <Col size="md-2"></Col>
+        <Col size="md-8">
+                {this.state.results.length ? (
+                <ResultList>
+                        {this.state.results.map(result => (
+                        <ResultItem key={result.link} 
+                            title={result.title}
+                            author={result.author}
+                            description={result.description}
+                            link={result.link}
+                            image={result.image}
+                        >
+                            <SaveBtn onClick={() => this.saveBook(result)} />
+                        </ResultItem>
+                        ))}
+                </ResultList>
+                    ) : (
+                        <h3>No Results to Display</h3>
+                    )}
           </Col>
-          <Col size="md-6 sm-12">
-          <ResultList>
-                {this.state.results.map(result => (
-                  <ResultItem key={result.link} 
-                    title={result.title}
-                    author={result.author}
-                    description={result.description}
-                    link={result.link}
-                    image={result.image}
-                  >
-                      <SaveBtn onClick={() => this.saveBook(result)} />
-                  </ResultItem>
-                ))}
-          </ResultList>
-          </Col>
+          <Col size="md-2"></Col>
         </Row>
       </Container>
     );
