@@ -1,11 +1,13 @@
 # Google Books Search
 
-added for push 4
+Google Logo Colors:
 
-Google Logo Colors
 Blue = #4285f4
+
 Red = #ea4335
+
 Yellow = #fbbc05
+
 Green = #34a853
 
 ### Overview
@@ -16,7 +18,7 @@ In this activity, you'll create a new React-based Google Books Search app. This 
 
 ### Search for a book
 
-![book search](/documentation/book_save.gif)
+![book search](/documentation/book_search.gif)
 
 ### Save a book to your list
 
